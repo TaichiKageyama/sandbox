@@ -1,0 +1,42 @@
+name: Multi-arch kernel build
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build and push multi-arch kernel
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/taichikageyama/kernel-build:20230106-1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+      volumes:
+        - /CCACHE:/CCACHE
+        - /DATA:/DATA
+        - /SRC:/SRC
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Check1
+        run: |
+          echo $GITHUB_WORKSPACE
+          echo ${{ github.repository_owner }}
+          ls /
+          ls /DATA
+          ls /SRC
+          ls /CCACHE
+
+      - name: kernel-ccache
+        id: kernel-ccache
+        uses: actions/cache@v3
+        with:
+          path: /CCACHE
+          key: ccache
+
+      - name: Check2
+        run: |
+          ls /CCACHE
