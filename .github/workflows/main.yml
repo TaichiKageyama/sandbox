@@ -31,6 +31,7 @@ jobs:
 
       - name: Check1
         run: |
+          set -x
           echo $GITHUB_WORKSPACE
           echo ${{ github.repository_owner }}
           ls /
@@ -39,7 +40,8 @@ jobs:
           ls /CCACHE
           pwd
           echo "github.workspace: ${{ github.workspace }}"
-          echo hi > ${{ github.workspace }}/test.txt
+          echo "hi" > ${{ github.workspace }}/test.txt
+          set +x 
       - name: kernel-ccache
         id: kernel-ccache
         uses: actions/cache@v3
