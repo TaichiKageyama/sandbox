@@ -10,8 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        targets:
-          - xxx
+        include:
+          - { kernel: kernel, arch: arm, defconfig: bcmrpi_defconfig }
+          - { kernel: kernel7, arch: arm,  defconfig: bcm2709_defconfig }
+          - { kernel: kernel7l, arch: arm, defconfig: bcm2711_defconfig }
+          - { kernel: kernel8, arch: arm64, defconfig: bcm2711_defconfig }
     container:
       # The following actions are required to avoid contaimer image pull error.
       # - https://github.com/users/TaichiKageyama/packages/container/kernel-build/settings
@@ -22,9 +25,9 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
       volumes:
-        - /CCACHE-${{ matrix.targets }}:/CCACHE
-        - /DATA-${{ matrix.targets }}:/DATA
-        - /SRC-${{ matrix.targets }}:/SRC
+        - /CCACHE-${{ matrix.kernel }}:/CCACHE
+        - /DATA-${{ matrix.kernel }}:/DATA
+        - /SRC-${{ matrix.kernel }}:/SRC
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -39,7 +42,7 @@ jobs:
           ls /SRC
           ls /CCACHE
           pwd
-          echo "hi" > /DATA/test.txt
+          echo "${{ matrix.kernel }}" > /DATA/test.txt
           set +x 
       - name: kernel-ccache
         id: kernel-ccache
@@ -55,5 +58,5 @@ jobs:
       - name: Archive artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: build-${{ matrix.targets }}
+          name: build-${{ matrix.kernel }}
           path: /DATA
