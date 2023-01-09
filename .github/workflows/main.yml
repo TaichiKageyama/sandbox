@@ -1,9 +1,7 @@
+---
 name: Multi-arch kernel build
-
 on:
-  push:
-  workflow_dispatch:
-
+  - push
 jobs:
   build:
     name: Build and push multi-arch kernel
@@ -11,15 +9,16 @@ jobs:
     strategy:
       matrix:
         include:
-          - { kernel: kernel, arch: arm, defconfig: bcmrpi_defconfig }
-          - { kernel: kernel7, arch: arm,  defconfig: bcm2709_defconfig }
-          - { kernel: kernel7l, arch: arm, defconfig: bcm2711_defconfig }
-          - { kernel: kernel8, arch: arm64, defconfig: bcm2711_defconfig }
+          - {kernel: kernel, arch: arm, defconfig: bcmrpi_defconfig}
+          - {kernel: kernel7, arch: arm, defconfig: bcm2709_defconfig}
+          - {kernel: kernel7l, arch: arm, defconfig: bcm2711_defconfig}
+          - {kernel: kernel8, arch: arm64, defconfig: bcm2711_defconfig}
     container:
-      # The following actions are required to avoid contaimer image pull error.
-      # - https://github.com/users/TaichiKageyama/packages/container/kernel-build/settings
+      # The following actions are required
+      #   to avoid contaimer image pull error.
+      # - https://$GITHUB_OWNER/packages/container/kernel-build/settings
       #     + Manage Actions access
-      #         * Add Repository: sandbox 
+      #         * Add Repository: sandbox
       image: ghcr.io/taichikageyama/kernel-build:20230106-1
       credentials:
         username: ${{ github.actor }}
@@ -43,7 +42,7 @@ jobs:
           ls /CCACHE
           pwd
           echo "${{ matrix.kernel }}" > /DATA/test.txt
-          set +x 
+          set +x
       - name: kernel-ccache
         id: kernel-ccache
         uses: actions/cache@v3
