@@ -40,7 +40,7 @@ jobs:
           ls /CCACHE
           pwd
           echo "github.workspace: ${{ github.workspace }}"
-          echo "hi" > ${{ github.workspace }}/test.txt
+          echo "hi" > test.txt
           set +x 
       - name: kernel-ccache
         id: kernel-ccache
