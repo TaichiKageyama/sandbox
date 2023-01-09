@@ -55,5 +55,5 @@ jobs:
       - name: Archive artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: build-${{ matrix.xxx }}
+          name: build-${{ matrix.targets }}
           path: /DATA
