@@ -106,8 +106,11 @@ install_modules()
         local ret=1
         cd $SRC
         time make INSTALL_MOD_PATH=$ROOT modules_install
+        rm $ROOT/lib/modules/
         ret=$?
 	export KERNEL_RELEASE_VERS=$(cat ./include/config/kernel.release)
+        rm -f "$ROOT/lib/modules/${KERNEL_RELEASE_VERS}/build"
+        rm -f "$ROOT/lib/modules/${KERNEL_RELEASE_VERS}/source"
         cd
         return $red
 }
@@ -115,11 +118,12 @@ install_modules()
 install_kernel()
 {
         cd $SRC
-        cp -f arch/$ARCH/boot/$IMG $BOOT/$IMG-${KERNEL_RELEASE_VERS}
+        cp -f arch/$ARCH/boot/$IMG $BOOT/$KERNEL-${KERNEL_RELEASE_VERS}
         cp -f arch/$ARCH/boot/dts/*.dtb $BOOT/.
         cp -f arch/$ARCH/boot/dts/overlays/*.dtb* $BOOT/overlays/.
         cp -f arch/$ARCH/boot/dts/overlays/README $BOOT/overlays/.
         cd
+        rm -rf $SRC
         echo "Completed: arch: $ARCH target: $TARGET: kernel: $KERNEL_RELEASE_VERS"
 }
 
