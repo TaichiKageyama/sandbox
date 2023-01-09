@@ -39,8 +39,7 @@ jobs:
           ls /SRC
           ls /CCACHE
           pwd
-          echo "github.workspace: ${{ github.workspace }}"
-          echo "hi" > test.txt
+          echo "hi" > /DATA/test.txt
           set +x 
       - name: kernel-ccache
         id: kernel-ccache
@@ -57,4 +56,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: build-${{ matrix.xxx }}
-          path: ${{ github.workspace }}
+          path: /DATA
