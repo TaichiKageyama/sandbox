@@ -22,9 +22,9 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
       volumes:
-        - /CCACHE:/CCACHE-${{ matrix.targets }}
-        - /DATA:/DATA-${{ matrix.targets }}
-        - /SRC:/SRC-${{ matrix.targets }}
+        - /CCACHE-${{ matrix.targets }}:/CCACHE
+        - /DATA-${{ matrix.targets }}:/DATA
+        - /SRC-${{ matrix.targets }}:/SRC
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -40,7 +40,6 @@ jobs:
           pwd
           echo "github.workspace: ${{ github.workspace }}"
           echo hi > ${{ github.workspace }}/test.txt
-
       - name: kernel-ccache
         id: kernel-ccache
         uses: actions/cache@v3
