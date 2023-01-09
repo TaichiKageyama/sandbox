@@ -33,6 +33,7 @@ jobs:
           echo $GITHUB_WORKSPACE
           echo ${{ github.repository_owner }}
           ls /
+          docker pull ghcr.io/taichikageyama/kernel-build:20230106-1
           #ls /DATA
           #ls /SRC
           #ls /CCACHE
@@ -44,6 +45,6 @@ jobs:
       #    path: /CCACHE
       #    key: ccache
 
-      - name: Check2
-        run: |
-          ls /CCACHE
+      #- name: Check2
+      #  run: |
+      #    ls /CCACHE
