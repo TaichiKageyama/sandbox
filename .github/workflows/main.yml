@@ -10,10 +10,10 @@ jobs:
     strategy:
       matrix:
         include:
-          - {kernel: kernel, arch: arm, defconfig: bcmrpi_defconfig}
-          - {kernel: kernel7, arch: arm, defconfig: bcm2709_defconfig}
-          - {kernel: kernel7l, arch: arm, defconfig: bcm2711_defconfig}
-          - {kernel: kernel8, arch: arm64, defconfig: bcm2711_defconfig}
+          #- {kernel: "kernel", arch: "arm", defconfig: "bcmrpi_defconfig", target: "1.20230106"}
+          - {kernel: "kernel7", arch: "arm", defconfig: "bcm2709_defconfig", target: "1.20230106"}
+          #- {kernel: "kernel7l", arch: "arm", defconfig: "bcm2711_defconfig", target: "1.20230106"}
+          #- {kernel: "kernel8", arch: "arm64", defconfig: "bcm2711_defconfig", target: "1.20230106"}
     container:
       # The following actions are required
       #   to avoid contaimer image pull error.
@@ -34,7 +34,6 @@ jobs:
 
       - name: Check1
         run: |
-          set -x
           echo $GITHUB_WORKSPACE
           echo ${{ github.repository_owner }}
           ls /
@@ -42,8 +41,7 @@ jobs:
           ls /SRC
           ls /CCACHE
           pwd
-          echo "${{ matrix.kernel }}" > /DATA/test.txt
-          set +x
+
       - name: kernel-ccache
         id: kernel-ccache
         uses: actions/cache@v3
@@ -51,9 +49,12 @@ jobs:
           path: /CCACHE
           key: ccache
 
-      - name: Check2
+      - name: Build
         run: |
-          ls /CCACHE
+          chmod 555 ./build.sh
+          ./build.sh ${{ matrix.kernel }} \
+            ${{ matrix.arm }} ${{ matrix.deconfig }} ${{ matrix.target }} \
+            kiss /DATA
 
       - name: Archive artifacts
         uses: actions/upload-artifact@v3
