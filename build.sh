@@ -96,7 +96,7 @@ build_kernel()
         local ret=1
         cd $SRC
 	env | grep -e CROSS -e ARCH
-        make -j $NPROC $IMG modules dtbs
+        time make -j $NPROC $IMG modules dtbs
         ret=$?
         return $ret
 }
@@ -105,7 +105,7 @@ install_modules()
 {
         local ret=1
         cd $SRC
-        make INSTALL_MOD_PATH=$ROOT modules_install
+        time make INSTALL_MOD_PATH=$ROOT modules_install
         ret=$?
 	export KERNEL_RELEASE_VERS=$(cat ./include/config/kernel.release)
         cd
