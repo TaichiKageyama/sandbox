@@ -53,7 +53,7 @@ jobs:
         run: |
           chmod 555 ./build.sh
           ./build.sh ${{ matrix.kernel }} \
-            ${{ matrix.arm }} ${{ matrix.deconfig }} ${{ matrix.target }} \
+            ${{ matrix.arch }} ${{ matrix.defconfig }} ${{ matrix.target }} \
             kiss /DATA
 
       - name: Archive artifacts
