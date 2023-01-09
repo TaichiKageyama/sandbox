@@ -4,13 +4,14 @@ on:
   push:
   workflow_dispatch:
 
-permissions: read-all
-
 jobs:
   build:
     name: Build and push multi-arch kernel
     runs-on: ubuntu-latest
-
+    # https://docs.github.com/en/actions/using-jobs/assigning-permissions-to-jobs
+    #    Error: Docker pull failed with exit code 1
+    permissions:
+      packages: read
     container:
       image: ghcr.io/taichikageyama/kernel-build:20230106-1
       credentials:
