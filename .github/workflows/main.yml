@@ -11,9 +11,9 @@ jobs:
       matrix:
         include:
           #- {kernel: "kernel", arch: "arm", defconfig: "bcmrpi_defconfig", target: "1.20230106"}
-          - {kernel: "kernel7", arch: "arm", defconfig: "bcm2709_defconfig", target: "1.20230106"}
+          #- {kernel: "kernel7", arch: "arm", defconfig: "bcm2709_defconfig", target: "1.20230106"}
           #- {kernel: "kernel7l", arch: "arm", defconfig: "bcm2711_defconfig", target: "1.20230106"}
-          #- {kernel: "kernel8", arch: "arm64", defconfig: "bcm2711_defconfig", target: "1.20230106"}
+          - {kernel: "kernel8", arch: "arm64", defconfig: "bcm2711_defconfig", target: "1.20230106"}
     container:
       # The following actions are required
       #   to avoid contaimer image pull error.
