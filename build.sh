@@ -15,7 +15,7 @@ export WORKDIR="$6"
 [ "$ENV_WORKDIR" != "" ] && export WORKDIR="$ENV_WORKDIR"
 
 export USE_CCACHE=1
-export CCACHE_DIR=$WORKDIR/CCACHE
+export CCACHE_DIR=/CCACHE
 mkdir -p $CCACHE_DIR
 GO=0
 

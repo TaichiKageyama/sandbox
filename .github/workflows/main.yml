@@ -27,7 +27,6 @@ jobs:
       volumes:
         - /CCACHE-${{ matrix.kernel }}:/CCACHE
         - /DATA-${{ matrix.kernel }}:/DATA
-        - /SRC-${{ matrix.kernel }}:/SRC
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -38,7 +37,6 @@ jobs:
           echo ${{ github.repository_owner }}
           ls /
           ls /DATA
-          ls /SRC
           ls /CCACHE
           pwd
 
