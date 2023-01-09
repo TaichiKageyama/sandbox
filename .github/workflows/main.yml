@@ -4,6 +4,10 @@ on:
   push:
   workflow_dispatch:
 
+# https://github.com/community/community/discussions/30173
+permissions:
+  packages: read
+
 jobs:
   build:
     name: Build and push multi-arch kernel
@@ -13,7 +17,7 @@ jobs:
       image: ghcr.io/taichikageyama/kernel-build:20230106-1
       credentials:
         username: ${{ github.actor }}
-        password: ${{ secrets.GHCR_TOKEN }}
+        password: ${{ secrets.GITHUB_TOKEN }}
       volumes:
         - /CCACHE:/CCACHE
         - /DATA:/DATA
