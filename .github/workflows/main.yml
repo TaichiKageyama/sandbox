@@ -5,7 +5,9 @@ on:
   workflow_dispatch:
 
 # https://github.com/community/community/discussions/30173
+# GITHUB_TOKEN
 permissions:
+  contents: read
   packages: read
 
 jobs:
