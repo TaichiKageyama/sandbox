@@ -9,14 +9,18 @@ jobs:
     name: Build and push multi-arch kernel
     runs-on: ubuntu-latest
     container:
-      # image: ghcr.io/taichikageyama/kernel-build:20230106-1
-      # credentials:
-      #  username: ${{ github.actor }}
-      #  password: ${{ secrets.GITHUB_TOKEN }}
-      #volumes:
-      #  - /CCACHE:/CCACHE
-      #  - /DATA:/DATA
-      #  - /SRC:/SRC
+       # The following actions are required to avoid contaimer image pull error.
+       # - https://github.com/users/TaichiKageyama/packages/container/kernel-build/settings
+       #     + Manage Actions access
+       #         * Add Repository: sandbox 
+       image: ghcr.io/taichikageyama/kernel-build:20230106-1
+       credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+      volumes:
+        - /CCACHE:/CCACHE
+        - /DATA:/DATA
+        - /SRC:/SRC
     steps:
       - name: login check
         uses: docker/login-action@v2
@@ -33,18 +37,17 @@ jobs:
           echo $GITHUB_WORKSPACE
           echo ${{ github.repository_owner }}
           ls /
-          docker pull ghcr.io/taichikageyama/kernel-build:20230106-1
-          #ls /DATA
-          #ls /SRC
-          #ls /CCACHE
+          ls /DATA
+          ls /SRC
+          ls /CCACHE
 
-      #- name: kernel-ccache
-      #  id: kernel-ccache
-      #  uses: actions/cache@v3
-      #  with:
-      #    path: /CCACHE
-      #    key: ccache
+      - name: kernel-ccache
+        id: kernel-ccache
+        uses: actions/cache@v3
+        with:
+          path: /CCACHE
+          key: ccache
 
-      #- name: Check2
-      #  run: |
-      #    ls /CCACHE
+      - name: Check2
+        run: |
+          ls /CCACHE
