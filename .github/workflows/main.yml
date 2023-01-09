@@ -1,7 +1,8 @@
 ---
 name: Multi-arch kernel build
-on:
-  - push
+on:  # yamllint disable-line rule:truthy
+  # - push
+  - workflow_dispatch
 jobs:
   build:
     name: Build and push multi-arch kernel
