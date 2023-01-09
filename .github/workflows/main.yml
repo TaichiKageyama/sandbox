@@ -8,6 +8,10 @@ jobs:
   build:
     name: Build and push multi-arch kernel
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        targets:
+          - xxx
     container:
       # The following actions are required to avoid contaimer image pull error.
       # - https://github.com/users/TaichiKageyama/packages/container/kernel-build/settings
@@ -18,9 +22,9 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
       volumes:
-        - /CCACHE:/CCACHE
-        - /DATA:/DATA
-        - /SRC:/SRC
+        - /CCACHE:/CCACHE-${{ matrix.targets }}
+        - /DATA:/DATA-${{ matrix.targets }}
+        - /SRC:/SRC-${{ matrix.targets }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -33,6 +37,9 @@ jobs:
           ls /DATA
           ls /SRC
           ls /CCACHE
+          pwd
+          echo "github.workspace: ${{ github.workspace }}"
+          echo hi > ${{ github.workspace }}/test.txt
 
       - name: kernel-ccache
         id: kernel-ccache
@@ -44,3 +51,10 @@ jobs:
       - name: Check2
         run: |
           ls /CCACHE
+
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-${{ matrix.xxx }}
+           path: ${{ github.workspace }}
+
