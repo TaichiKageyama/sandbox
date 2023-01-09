@@ -19,7 +19,7 @@ jobs:
       #  - /SRC:/SRC
     steps:
       - name: login check
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -33,16 +33,16 @@ jobs:
           echo $GITHUB_WORKSPACE
           echo ${{ github.repository_owner }}
           ls /
-          ls /DATA
-          ls /SRC
-          ls /CCACHE
+          #ls /DATA
+          #ls /SRC
+          #ls /CCACHE
 
-      - name: kernel-ccache
-        id: kernel-ccache
-        uses: actions/cache@v3
-        with:
-          path: /CCACHE
-          key: ccache
+      #- name: kernel-ccache
+      #  id: kernel-ccache
+      #  uses: actions/cache@v3
+      #  with:
+      #    path: /CCACHE
+      #    key: ccache
 
       - name: Check2
         run: |
