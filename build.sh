@@ -112,7 +112,7 @@ install_modules()
         rm -f "$ROOT/lib/modules/${KERNEL_RELEASE_VERS}/build"
         rm -f "$ROOT/lib/modules/${KERNEL_RELEASE_VERS}/source"
         cd
-        return $red
+        return $ret
 }
 
 install_kernel()
